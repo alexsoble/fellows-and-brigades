@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Foo</title>
+<meta charset='utf-8' />
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+<style type='text/css'>
+body {
+  background:#000;
+  color:#fff;
+  font-family:'Georgia';
+  margin:0;
+}
+
+@-webkit-keyframes blinker {
+  from { opacity: 1.0; }
+  to { opacity: 0.0; }
+}
+
+em {
+  -webkit-animation-name: blinker;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
+  -webkit-animation-duration: 800ms;
+}
+
+strong {
+  font-weight:normal;
+  color:#FFF707;
+}
+
+a {
+  color:#FFF707;
+  text-decoration:none;
+}
+
+div {
+  cursor:pointer;
+  cursor:hand;
+  position:absolute;
+  top:0;
+  left:0;
+}
+
+</style>
+<script type='text/javascript'>
+window.onload = function() {
+    var s = document.getElementsByTagName('div'), cur = 0, ti;
+    if (!s) return;
+    function go(n) {
+        cur = n;
+        var i = 1e3, e = s[n], t;
+        for (var k = 0; k < s.length; k++) s[k].style.display = 'none';
+        e.style.display = 'inline';
+        e.style.fontSize = i + 'px';
+        if (e.firstChild.nodeName === 'IMG') {
+            document.body.style.backgroundImage = 'url(' + e.firstChild.src + ')';
+            e.firstChild.style.display = 'none';
+            if ('classList' in e) e.classList.add('imageText');
+        } else {
+            document.body.style.backgroundImage = '';
+            document.body.style.backgroundColor = e.style.backgroundColor;
+        }
+        if (ti !== undefined) window.clearInterval(ti);
+        t = parseInt(e.getAttribute('time-to-next') || 0, 10);
+        if (t > 0) ti = window.setTimeout(fwd, (t * 1000));
+        while (
+            e.offsetWidth > window.innerWidth ||
+            e.offsetHeight > window.innerHeight) {
+            e.style.fontSize = (i -= 5) + 'px';
+            if (i < 0) break;
+        }
+        e.style.marginTop = ((window.innerHeight - e.offsetHeight) / 2) + 'px';
+        if (window.location.hash !== n) window.location.hash = n;
+        document.title = e.textContent || e.innerText;
+    }
+    document.onclick = function() { go(++cur % (s.length)); };
+    function fwd() { go(Math.min(s.length - 1, ++cur)); }
+    function rev() { go(Math.max(0, --cur)); }
+    document.onkeydown = function(e) {
+        if (e.which === 39) fwd();
+        if (e.which === 37) rev();
+    };
+    document.ontouchstart = function(e) {
+        var x0 = e.changedTouches[0].pageX;
+        document.ontouchend = function(e) {
+            var x1 = e.changedTouches[0].pageX;
+            if (x1 - x0 < 0) fwd();
+            if (x1 - x0 > 0) rev();
+        };
+    };
+    function parse_hash() {
+        return Math.max(Math.min(
+            s.length - 1,
+            parseInt(window.location.hash.substring(1), 10)), 0);
+    }
+    if (window.location.hash) cur = parse_hash() || cur;
+    window.onhashchange = function() {
+        var c = parse_hash();
+        if (c !== cur) go(c);
+    };
+
+    go(cur);
+};
+</script></head><body>
+<div><p>Hello!</p>
+</div>
+<div><p>This story starts with... maps.</p>
+</div>
+<div><p><img src="http://images.huffingtonpost.com/2012-11-12-cpslocator.jpg" alt="old CPS school locator, ugly"></p>
+</div>
+<div><p><img src="http://i.imgur.com/UwoGCuW.png" alt="cps tiers map by open city"></p>
+</div>
+<div><p><img src="https://farm4.staticflickr.com/3857/14592963836_47a72008b4_b.jpg" alt="chicago hack night"></p>
+</div>
+<div><p><img src="http://i.imgur.com/95hyDvB.png" alt="new CPS school locator, very pretty"></p>
+</div>
+<div><p><a href="https://www.codeforamerica.org/apply">www.codeforamerica.org/apply</a></p>
+</div>
+<div><p><img src="https://photos-4.dropbox.com/t/2/AAC1BLFaOKw8egwIviOajMtBWwpbro10tzUnnvLZBaVFLg/12/367941808/jpeg/32x32/1/_/1/2/somerville-05.jpg/CLCxua8BIAEgAiADIAQgBSAGIAcoASgCKAM/5d6vK8GJwdk9ZZs_oQT1wQLzV2DQi_tNnKHKTeDVBD4?size=1024x768&amp;size_mode=2" alt="cfa team somerville"></p>
+</div>
+<div><p><img src="https://photos-4.dropbox.com/t/2/AACiM-CaG9MmM63S1qd14rNf6fxJYBzHk2fDXOut1fgh5w/12/367941808/jpeg/32x32/1/_/1/2/Photo%20Feb%2018%2C%206%2053%2027%20AM.jpg/CLCxua8BIAEgAiADIAQgBSAGIAcoASgCKAM/atq-P3Rv08SsrfQ9LwM0hYLMf27An1dM58oxhBIbZLY?size=1024x768&amp;size_mode=2" alt="picture of a school"></p>
+</div>
+<div><p><img src="https://photos-6.dropbox.com/t/2/AACQ4oE1QgcKet-M3UInIbFvqITXzTxNbnyzg2NPl_Vm0g/12/367941808/jpeg/32x32/1/_/1/2/Photo%20Feb%2026%2C%204%2055%2055%20AM.jpg/CLCxua8BIAEgAiADIAQgBSAGIAcoASgCKAM/J4wLQdN-3ZUCOPMHm2wUW53RR5xORWak-Yj9M21IwFw?size=1024x768&amp;size_mode=2" alt="picture of a teacher with a big binder that says &#39;data&#39; on it"></p>
+</div>
+<div><p><img src="https://photos-1.dropbox.com/t/2/AAA5K5xz0kMWDU5eReuj0f5Kr9Bd6BSRaI2TvA6_lGTcwA/12/367941808/jpeg/32x32/1/_/1/2/Photo%20Feb%2023%2C%206%2025%2036%20AM.jpg/CLCxua8BIAEgAiADIAQgBSAGIAcoASgCKAM/agQl_ylC6Vm6s_CpPi5UXOptmQlldKxKauqSO19qIzI?size=1024x768&amp;size_mode=2" alt="picture of a cute kid"></p>
+</div>
+<div><p>3</p>
+</div>
+<div><p><img src="https://photos-4.dropbox.com/t/2/AAC1BLFaOKw8egwIviOajMtBWwpbro10tzUnnvLZBaVFLg/12/367941808/jpeg/32x32/1/_/1/2/somerville-05.jpg/CLCxua8BIAEgAiADIAQgBSAGIAcoASgCKAM/5d6vK8GJwdk9ZZs_oQT1wQLzV2DQi_tNnKHKTeDVBD4?size=1024x768&amp;size_mode=2" alt="cfa team somerville"></p>
+</div>
+<div><p>300</p>
+</div>
+<div><p><img src="https://pbs.twimg.com/media/BqXlDJMCAAAVsHq.jpg:large" alt="code for boston"></p>
+</div>
+<div><p>300 &gt; 3</p>
+</div>
+<div><p><img src="https://pbs.twimg.com/media/CEM7c-sVAAEhSvn.png:large" alt="logo for melody kramer&#39;s nieman fellowship project on membership"></p>
+</div>
+<div><p><a href="http://melodykramer.github.io/">http://melodykramer.github.io/</a></p>
+</div>
+<div><p>How should fellows work with brigades?</p>
+</div>
+<div><p>Could brigade members be fellowship project members?</p>
+</div>
+<div><p>What might membership in a fellowship project mean?</p>
+</div>
+<div><p>How might membership make the project better?</p>
+</div>
+<div><p>How might membership make volunteers...</p>
+</div>
+<div><p>happy?</p>
+</div>
+<div><p>proud?</p>
+</div>
+<div><p>fulfilled?</p>
+</div>
+<div><p>Could members help us...</p>
+</div>
+<div><p>Make decisions?</p>
+</div>
+<div><p>Build better technology?</p>
+</div>
+<div><p>Connect to communities?</p>
+</div>
+<div><p>Market/grow?</p>
+</div>
+<div><p>Let&#39;s find out:</p>
+</div>
+<div><p><img src="https://pbs.twimg.com/media/CGEQMobUIAAqrG9.jpg:large" alt="code for SF volunteers discussing the somerville project"></p>
+</div>
+<div><p><img src="https://pbs.twimg.com/media/CGlhMIAWcAAGqpv.jpg:large" alt="code for Boston volunteers discussing the somerville project"></p>
+</div>
+<div><p>Recipe (so far):</p>
+</div>
+<div><p>1 Prepare.</p>
+</div>
+<div><p>2 Go.</p>
+</div>
+<div><p>3 Ask for help.</p>
+</div>
+<div><p>4 Sniff out skills.</p>
+</div>
+<div><p>5 Follow through.</p>
+</div>
+<div><p>6 Build community!</p>
+</div>
+<div><p>Work in progress</p>
+</div>
+<div><p>Share reactions &amp; ideas</p>
+</div>
+<div><p>Thank you</p>
+</div>
+<div><p><a href="https://www.twitter.com/alexsoble">@alexsoble</a></p>
+</div>
